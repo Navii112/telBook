@@ -15,6 +15,11 @@ public class UserView {
     public void insert() throws MyException{
         // 검증 클래스 생성
         InputValidation validation = new InputValidation();
+        // 입력자료 저장을 위한 변수 선언
+        String name;
+        int age;
+        String phone;
+        String address;
 
         // 이름, 나이, 주소, 전화번호
         System.out.println("== 전화번호 등록 ==");
@@ -24,7 +29,7 @@ public class UserView {
             try {
                 // 이름 : 무조건 한글만 중간 공백없이
                 System.out.println("이름 : ");
-                String name = scanner.next();
+                name = scanner.next();
                 validation.nameCheck(name);
                 nameOk = true;
             } catch (MyException e) {
@@ -33,13 +38,33 @@ public class UserView {
         } while (! nameOk);
 
         // 나이 : 0세 ~ 120세 사이값
-        System.out.println("나이 : ");
-        int age = scanner.nextInt();
+        boolean ageOk = false;
+        do {
+            try {
+                System.out.println("나이 : ");
+                age = scanner.nextInt();
+                validation.ageCheck(age);
+                ageOk = true;
+            } catch (MyException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (!ageOk);
+
         System.out.println("주소 : ");
-        String address = scanner.next();
+        address = scanner.next();
         // 전화번호 (010-XXXX-XXXX)
-        System.out.println("전화번호 : ");
-        String phone = scanner.next();
+        boolean phoneOk = false;
+        do {
+            try {
+                System.out.println("전화번호 : ");
+                phone = scanner.next();
+                validation.phoneCheck(phone);
+                phoneOk = true;
+            } catch (MyException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (!phoneOk);
+
     }
 
     public void update() {
