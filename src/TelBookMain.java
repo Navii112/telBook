@@ -1,8 +1,13 @@
+import view.UserView;
+
 import java.util.Scanner;
 
 public class TelBookMain {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+        // UserView 인스턴스를 생성
+        UserView userView = new UserView(sc);
         int input;
         while (true) {
             do {
@@ -12,16 +17,21 @@ public class TelBookMain {
             } while (input < 1 || input > 6);
             switch (input) {
                 case 1:
+                    userView.insert();
                     break;
-                case2:
+                case 2:
+                    userView.update();
                     break;
-                case3:
+                case 3:
+                    userView.delete();
                     break;
-                case4:
+                case 4:
+                    userView.searchAll();
                     break;
-                case5:
+                case 5:
+                    userView.searchOne();
                     break;
-                case6:
+                case 6:
                     System.out.println("종료합니다.");
             }
         }
