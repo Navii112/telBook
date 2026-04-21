@@ -1,4 +1,6 @@
 import db.DBConn;
+import repository.TelBookRepository;
+import service.TelBookService;
 import view.UserView;
 
 import java.sql.Connection;
@@ -9,9 +11,11 @@ public class TelBookMain {
 //        Connection connection = DBConn.getConnection();
         
         Scanner sc = new Scanner(System.in);
+        TelBookRepository repository = new TelBookRepository();
+        TelBookService service = new TelBookService(repository);
 
         // UserView 인스턴스를 생성
-        UserView userView = new UserView(sc);
+        UserView userView = new UserView(sc, service);
         int input;
         while (true) {
             do {
