@@ -3,7 +3,7 @@ import view.UserView;
 import java.util.Scanner;
 
 public class TelBookMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
 
         // UserView 인스턴스를 생성
