@@ -89,6 +89,8 @@ public class TelBookRepository {
                 dto.setAddress(rs.getString("address"));
                 dto.setTelNumber(rs.getString("phone"));
             }
+            psmt.close();
+            rs.close();
         } catch (Exception e) {
             System.out.println("FindById Error : " + e.getMessage());
         }
