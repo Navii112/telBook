@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 public class TelBookMain {
     public static void main(String[] args) throws Exception {
-//        Connection connection = DBConn.getConnection();
+        Connection connection = DBConn.getConnection();
         
         Scanner sc = new Scanner(System.in);
-        TelBookRepository repository = new TelBookRepository();
+        TelBookRepository repository = new TelBookRepository(connection);
         TelBookService service = new TelBookService(repository);
 
         // UserView 인스턴스를 생성
@@ -25,6 +25,7 @@ public class TelBookMain {
             } while (input < 1 || input > 6);
             switch (input) {
                 case 1:
+                    // 종료
                     userView.insert();
                     break;
                 case 2:
@@ -34,9 +35,10 @@ public class TelBookMain {
                     userView.delete();
                     break;
                 case 4:
+                    // 종료
                     userView.searchAll();
                     break;
-                case 5:
+                case 5: // id로 1개 검색
                     userView.searchOne();
                     break;
                 case 6:
