@@ -63,9 +63,34 @@ public class TelBookRepository {
                 // 만들어진 dto를 List에 담는다.
                 dtoList.add(dto);
             }
+            psmt.close();
+            rs.close();
         } catch (Exception e) {
             System.out.println("Find All Error : " + e.getMessage());
         }
         return dtoList;
+    }
+
+    public List<TelDto> getListOne() {
+        List<TelDto> dtoList = new ArrayList<>();
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM telbook WHERE id = ?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setLong(1);
+            rs = psmt.executeQuery();
+            // 리스트에 추가
+            while (rs.next()) {
+                TelDto dto = new TelDto();
+                dto.setId(rs.getLong("id"));
+                dto.setName(rs.getString("name"));
+                dto.setAge(rs.getInt("age"));
+                dto.setAddress(rs.getString("address"));
+                dto.setTelNumber(rs.getString("phone"));
+            }
+        } catch (Exception e) {
+            System.out.println("FindById Error : " + e.getMessage());
+        }
     }
 }
