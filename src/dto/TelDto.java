@@ -7,6 +7,7 @@ public class TelDto {
     private String address;
     private String telNumber;
 
+    public TelDto(){}
     public TelDto(Long id, String name, int age, String address, String telNumber) {
         this.id = id;
         this.name = name;
@@ -17,6 +18,10 @@ public class TelDto {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
