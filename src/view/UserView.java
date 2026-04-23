@@ -193,4 +193,30 @@ public class UserView {
             list.forEach(x -> System.out.println(x));
         }
     }
+
+    public void search() {
+        int choice = 0;
+        String keyword = "";
+        do {
+            System.out.println("검색할 기준을 선택하세요.");
+            System.out.println("1. 이름 2. 주소");
+            choice = scanner.nextInt();
+            if (choice == 1) {
+                System.out.println("검색할 이름의 일부를 입력 : ");
+                keyword = scanner.next();
+            } else {
+                System.out.println("검색할 주소의 일부를 입력 : ");
+                keyword = scanner.next();
+            }
+
+        } while (choice < 1 || choice > 2);
+        List<TelDto> searchLists = service.search(choice, keyword);
+        // 결과 출력
+        if (searchLists.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        } else {
+            searchLists.forEach(x -> System.out.println(x));
+        }
+    }
 }
