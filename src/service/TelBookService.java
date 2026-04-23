@@ -25,7 +25,7 @@ public class TelBookService {
         return repository.findAll();
     }
 
-    public List<TelDto> getListOne() {
+    public List<TelDto> getListOne(int id) {
         return repository.findById(id);
     }
 
@@ -36,5 +36,9 @@ public class TelBookService {
     public void update(TelDto updateData) {
 //        System.out.println(updateData);
         repository.update(updateData);
+    }
+
+    public List<TelDto> search(int choice, String keyword) {
+        return repository.search(choice, keyword);
     }
 }

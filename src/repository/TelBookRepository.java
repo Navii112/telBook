@@ -72,15 +72,19 @@ public class TelBookRepository {
         return dtoList;
     }
 
-    public List<TelDto> getListOne() {
+    public List<TelDto> findById(int id) {
         List<TelDto> dtoList = new ArrayList<>();
         PreparedStatement psmt = null;
         ResultSet rs = null;
         try {
             String sql = "SELECT * FROM telbook WHERE id = ?";
             psmt = conn.prepareStatement(sql);
-            psmt.setId("id");
+
+            // [수정] psmt.setId("id"); -> setInt()를 사용하고 매개변수 id를 전달
+            psmt.setInt(1, id);
+
             rs = psmt.executeQuery();
+
             // 리스트에 추가
             while (rs.next()) {
                 TelDto dto = new TelDto();
@@ -89,12 +93,18 @@ public class TelBookRepository {
                 dto.setAge(rs.getInt("age"));
                 dto.setAddress(rs.getString("address"));
                 dto.setTelNumber(rs.getString("phone"));
+
+                // [수정] 생성한 dto를 리스트에 추가하는 코드 작성
+                dtoList.add(dto);
             }
             psmt.close();
             rs.close();
         } catch (Exception e) {
             System.out.println("FindById Error : " + e.getMessage());
         }
+
+        // [수정] 최종 결과 리스트를 리턴
+        return dtoList;
     }
 
     public int deleteById(int id) {
@@ -139,5 +149,40 @@ public class TelBookRepository {
         } catch (Exception e) {
             System.out.println("INSERT 오류 : " + e.getMessage());
         }
+    }
+
+    public List<TelDto> search(int choice, String keyword) {
+        List<TelDto> dtoList = new ArrayList<>();
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        String sql = "";
+        try {
+            if(choice == 1){
+                // 이름 검색
+                sql = "SELECT * FROM telbook WHERE name LIKE ?";
+            } else {
+                // 주소 검색
+                sql = "SELECT * FROM telbook WHERE address LIKE ?";
+            }
+
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, "%" + keyword + "%");
+            rs = psmt.executeQuery();
+            // 리스트에 추가
+            while (rs.next()) {
+                TelDto dto = new TelDto();
+                dto.setId(rs.getLong("id"));
+                dto.setName(rs.getString("name"));
+                dto.setAge(rs.getInt("age"));
+                dto.setAddress(rs.getString("address"));
+                dto.setTelNumber(rs.getString("phone"));
+                dtoList.add(dto);
+            }
+            psmt.close();
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Search Error : " + e.getMessage());
+        }
+        return dtoList;
     }
 }
